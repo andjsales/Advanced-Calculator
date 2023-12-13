@@ -1,13 +1,28 @@
 const express = require('express');
 const app = express();
 const ExpressError = require('./expressError');
+const { convertAndValidateNumsArray, findMode, findMean, findMedian } = require('./helpers');
+
+
+// Calculate the average of the numbers
+app.get('/mean', (req, res, next) => {
+    try {
+        let nums = convertAndValidateNumsArray(req.query.nums);
+        let result = {
+            operation: "mean",
+            result: findMean(nums)
+        };
+        return res.send(result);
+    } catch (error) {
+        next(error);
+    }
+});
 
 app.get('/mean', (req, res) => {
     if (!req.query.nums) {
         throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
     }
-    let numsAsStrings = req.query.nums.split(',');
-    let nums = convertAndValidateNumsArray(numsAsStrings);
+    let nums = convertAndValidateNumsArray(req.query.nums);
     if (nums instanceof Error) {
         throw new ExpressError(nums.message);
     }
@@ -18,12 +33,12 @@ app.get('/mean', (req, res) => {
     return res.send(result);
 });
 
+// Sort the numbers and find the middle value
 app.get('/median', function (req, res, next) {
     if (!req.query.nums) {
         throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
     }
-    let numsAsStrings = req.query.nums.split(',');
-    let nums = convertAndValidateNumsArray(numsAsStrings);
+    let nums = convertAndValidateNumsArray(req.query.nums);
     if (nums instanceof Error) {
         throw new ExpressError(nums.message);
     }
@@ -36,13 +51,13 @@ app.get('/median', function (req, res, next) {
     return res.send(result);
 });
 
+// mode calculation route
 app.get('/mode', function (req, res, next) {
     // Similar structure as the '/mean' and '/median' routes
     if (!req.query.nums) {
         throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
     }
-    let numsAsStrings = req.query.nums.split(',');
-    let nums = convertAndValidateNumsArray(numsAsStrings);
+    let nums = convertAndValidateNumsArray(req.query.nums);
     if (nums instanceof Error) {
         throw new ExpressError(nums.message);
     }
@@ -55,17 +70,15 @@ app.get('/mode', function (req, res, next) {
     return res.send(result);
 });
 
-// Error handling
 app.use((err, req, res, next) => {
-    // Set the response status code to the error's status or 500 if not specified
-    res.status(err.status || 500);
+    let status = err.status || 500;
+    let message = err.message;
 
-    // Return a JSON response containing the error info
-    return res.json({
-        error: err,
-        message: err.message
+    return res.status(status).json({
+        error: { message, status }
     });
 });
+
 
 // Start server
 app.listen(3000, function () {

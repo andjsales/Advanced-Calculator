@@ -4,20 +4,6 @@ const ExpressError = require('./expressError');
 const { convertAndValidateNumsArray, findMode, findMean, findMedian } = require('./helpers');
 
 
-// Calculate the average of the numbers
-app.get('/mean', (req, res, next) => {
-    try {
-        let nums = convertAndValidateNumsArray(req.query.nums);
-        let result = {
-            operation: "mean",
-            result: findMean(nums)
-        };
-        return res.send(result);
-    } catch (error) {
-        next(error);
-    }
-});
-
 app.get('/mean', (req, res) => {
     if (!req.query.nums) {
         throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);

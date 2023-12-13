@@ -1,8 +1,8 @@
 # ExpressCalculator
 
-/mean: Calculates the mean (average) of the given numbers.
-/median: Finds the median (middle value) of the given numbers.
-/mode: Determines the mode (most frequently occurring value) of the given numbers.
+- /mean: Calculates the mean (average) of the given numbers.
+- /median: Finds the median (middle value) of the given numbers.
+- /mode: Determines the mode (most frequently occurring value) of the given numbers.
 
 To calculate Mean: http://localhost:3000/mean?nums=1,2,3,44
 To calculate Median: http://localhost:3000/mean?nums=5,3,1,4,2

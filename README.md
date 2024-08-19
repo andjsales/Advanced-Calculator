@@ -1,4 +1,4 @@
-# ExpressCalculator
+# Advanced Calculator
 
 ## Overview
 
@@ -13,7 +13,6 @@
 
 ## Setup
 
-- Make sure to have Node.js
 - `npm install`
 - `node app.js`
 

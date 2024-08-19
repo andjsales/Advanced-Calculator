@@ -2,7 +2,8 @@
 
 ## Overview
 
-- This is a Node.js Express application that provides a simple API to calculate the mean, median, and mode of a list of numbers. - Designed to demonstrate basic Express routing, error handling, and the use for mathematical calculations.
+- This is a Node.js Express application that provides a simple API to calculate the mean, median, and mode of a list of numbers.
+- Designed to demonstrate basic Express routing, error handling, and the use for mathematical calculations.
 
 ## Setup
 
